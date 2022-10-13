@@ -51,16 +51,17 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
               Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
-                      child: Text(
-                        widget.code!,
-                        textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                  if (widget.code != null && widget.code != '')
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
+                        child: Text(
+                          widget.code!,
+                          textAlign: TextAlign.center,
+                          style: FlutterFlowTheme.of(context).bodyText1,
+                        ),
                       ),
                     ),
-                  ),
                 ],
               ),
               InkWell(
