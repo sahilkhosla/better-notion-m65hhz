@@ -21,7 +21,7 @@ class LandingPageWidget extends StatefulWidget {
 }
 
 class _LandingPageWidgetState extends State<LandingPageWidget> {
-  ApiCallResponse? apiResultipi;
+  ApiCallResponse? apiResponse;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   String _currentPageLink = '';
 
@@ -30,17 +30,17 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      apiResultipi = await NotionTokenCall.call(
+      apiResponse = await NotionTokenCall.call(
         code: widget.code,
       );
-      if ((apiResultipi?.succeeded ?? true)) {
+      if ((apiResponse?.statusCode ?? 200) == 200 ? false : false) {
         await showDialog(
           context: context,
           builder: (alertDialogContext) {
             return AlertDialog(
               title: Text('Success'),
               content: Text(NotionTokenCall.accessToken(
-                (apiResultipi?.jsonBody ?? ''),
+                (apiResponse?.jsonBody ?? ''),
               ).toString()),
               actions: [
                 TextButton(
@@ -57,7 +57,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
           builder: (alertDialogContext) {
             return AlertDialog(
               title: Text('Fail'),
-              content: Text((apiResultipi?.statusCode ?? 200).toString()),
+              content: Text((apiResponse?.statusCode ?? 200).toString()),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(alertDialogContext),
