@@ -33,7 +33,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
       apiResponse = await NotionTokenCall.call(
         code: widget.code,
       );
-      if ((apiResponse?.statusCode ?? 200) == 200 ? false : false) {
+      if ((apiResponse?.statusCode ?? 200) == 200 ? true : true) {
         await showDialog(
           context: context,
           builder: (alertDialogContext) {
