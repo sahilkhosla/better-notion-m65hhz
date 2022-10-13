@@ -2,25 +2,24 @@ import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:share_plus/share_plus.dart';
 
-class HomePageWidget extends StatefulWidget {
-  const HomePageWidget({
+class LandingPageWidget extends StatefulWidget {
+  const LandingPageWidget({
     Key? key,
-    this.test,
-    this.another,
+    this.code,
   }) : super(key: key);
 
-  final String? test;
-  final String? another;
+  final String? code;
 
   @override
-  _HomePageWidgetState createState() => _HomePageWidgetState();
+  _LandingPageWidgetState createState() => _LandingPageWidgetState();
 }
 
-class _HomePageWidgetState extends State<HomePageWidget> {
+class _LandingPageWidgetState extends State<LandingPageWidget> {
+  String _currentPageLink = '';
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -32,7 +31,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
         title: Text(
-          'Connect',
+          'Landing Page',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Poppins',
                 color: Colors.white,
@@ -56,7 +55,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
                       child: Text(
-                        'Hello World',
+                        widget.code!,
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyText1,
                       ),
@@ -64,23 +63,16 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   ),
                 ],
               ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
-                      child: Text(
-                        valueOrDefault<String>(
-                          functions.getHeading(widget.test),
-                          'works?',
-                        ),
-                        textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyText1,
-                      ),
-                    ),
-                  ),
-                ],
+              InkWell(
+                onTap: () async {
+                  _currentPageLink = await generateCurrentPageLink(context);
+
+                  await Share.share(_currentPageLink);
+                },
+                child: Text(
+                  'Share',
+                  style: FlutterFlowTheme.of(context).bodyText1,
+                ),
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),

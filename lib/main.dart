@@ -91,7 +91,7 @@ class NavBarPage extends StatefulWidget {
 
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
-  String _currentPageName = 'WebView';
+  String _currentPageName = 'InitConnection';
   late Widget? _currentPage;
 
   @override
@@ -104,8 +104,8 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'HomePage': HomePageWidget(),
-      'WebView': WebViewWidget(),
+      'LandingPage': LandingPageWidget(),
+      'InitConnection': InitConnectionWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
     return Scaffold(

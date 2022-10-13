@@ -81,14 +81,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               appStateNotifier.loggedIn ? NavBarPage() : LoginWidget(),
           routes: [
             FFRoute(
-              name: 'HomePage',
-              path: 'homePage',
+              name: 'LandingPage',
+              path: 'landingPage',
               requireAuth: true,
               builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'HomePage')
-                  : HomePageWidget(
-                      test: params.getParam('test', ParamType.String),
-                      another: params.getParam('another', ParamType.String),
+                  ? NavBarPage(initialPage: 'LandingPage')
+                  : LandingPageWidget(
+                      code: params.getParam('code', ParamType.String),
                     ),
             ),
             FFRoute(
@@ -97,12 +96,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => LoginWidget(),
             ),
             FFRoute(
-              name: 'WebView',
-              path: 'webView',
+              name: 'InitConnection',
+              path: 'initConnection',
               requireAuth: true,
               builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'WebView')
-                  : WebViewWidget(),
+                  ? NavBarPage(initialPage: 'InitConnection')
+                  : InitConnectionWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),

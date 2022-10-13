@@ -1,4 +1,4 @@
 // Export pages
-export 'home_page/home_page_widget.dart' show HomePageWidget;
+export 'landing_page/landing_page_widget.dart' show LandingPageWidget;
 export 'login/login_widget.dart' show LoginWidget;
-export 'web_view/web_view_widget.dart' show WebViewWidget;
+export 'init_connection/init_connection_widget.dart' show InitConnectionWidget;

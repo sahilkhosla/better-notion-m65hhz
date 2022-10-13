@@ -203,7 +203,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         return;
                       }
 
-                      context.goNamedAuth('WebView', mounted);
+                      context.goNamedAuth('InitConnection', mounted);
                     },
                     text: 'Login',
                     options: FFButtonOptions(
