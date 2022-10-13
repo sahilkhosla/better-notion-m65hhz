@@ -4,7 +4,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 
-const _kDynamicLinksUrl = 'https://betternotion.page.link';
+const _kDynamicLinksUrl = 'https://better-notion-m65hhz.flutterflow.app';
 const _kAppId = 'com.mycompany.betternotion';
 
 Future<String> generateCurrentPageLink(

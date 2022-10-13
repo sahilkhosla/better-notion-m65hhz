@@ -45,7 +45,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http" android:host="betternotion.page.link" />
+                <data android:scheme="http" android:host="better-notion-m65hhz.flutterflow.app" />
                 <data android:scheme="https" />
             </intent-filter>
 
