@@ -38,11 +38,14 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
           context: context,
           builder: (alertDialogContext) {
             return AlertDialog(
-              title: Text((apiResultipi?.jsonBody ?? '')),
+              title: Text('Success'),
+              content: Text(NotionTokenCall.accessToken(
+                (apiResultipi?.jsonBody ?? ''),
+              ).toString()),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
+                  child: Text('Cool'),
                 ),
               ],
             );
@@ -53,11 +56,12 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
           context: context,
           builder: (alertDialogContext) {
             return AlertDialog(
-              title: Text((apiResultipi?.jsonBody ?? '')),
+              title: Text('Fail'),
+              content: Text((apiResultipi?.statusCode ?? 200).toString()),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
+                  child: Text('Boo'),
                 ),
               ],
             );

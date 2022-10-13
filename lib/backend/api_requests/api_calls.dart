@@ -31,9 +31,53 @@ class NotionTokenCall {
     );
   }
 
-  static dynamic success(dynamic response) => getJsonField(
+  static dynamic botId(dynamic response) => getJsonField(
         response,
-        r'''$''',
+        r'''$.bot_id''',
+      );
+  static dynamic workspaceName(dynamic response) => getJsonField(
+        response,
+        r'''$.workspace_name''',
+      );
+  static dynamic workspaceIcon(dynamic response) => getJsonField(
+        response,
+        r'''$.workspace_icon''',
+      );
+  static dynamic workspaceId(dynamic response) => getJsonField(
+        response,
+        r'''$.workspace_id''',
+      );
+  static dynamic ownerType(dynamic response) => getJsonField(
+        response,
+        r'''$.owner.type''',
+      );
+  static dynamic ownerUserObject(dynamic response) => getJsonField(
+        response,
+        r'''$.owner.user.object''',
+      );
+  static dynamic ownerUserId(dynamic response) => getJsonField(
+        response,
+        r'''$.owner.user.id''',
+      );
+  static dynamic ownerUserName(dynamic response) => getJsonField(
+        response,
+        r'''$.owner.user.name''',
+      );
+  static dynamic ownerUserAvatarURL(dynamic response) => getJsonField(
+        response,
+        r'''$.owner.user.avatar_url''',
+      );
+  static dynamic ownerUserType(dynamic response) => getJsonField(
+        response,
+        r'''$.owner.user.type''',
+      );
+  static dynamic ownerUserEmail(dynamic response) => getJsonField(
+        response,
+        r'''$.owner.user.person.email''',
+      );
+  static dynamic accessToken(dynamic response) => getJsonField(
+        response,
+        r'''$.access_token''',
       );
 }
 
