@@ -67,15 +67,22 @@ class _InitConnectionWidgetState extends State<InitConnectionWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
-                          child: Text(
-                            'Connect',
-                            textAlign: TextAlign.center,
-                            style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 28,
-                                      decoration: TextDecoration.underline,
-                                    ),
+                          child: InkWell(
+                            onTap: () async {
+                              await launchURL(
+                                  'https://api.notion.com/v1/oauth/authorize?client_id=5c658036-db81-4aac-bdcc-e614f0a17753&response_type=code');
+                            },
+                            child: Text(
+                              'Connect',
+                              textAlign: TextAlign.center,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    fontSize: 28,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                            ),
                           ),
                         ),
                       ],
