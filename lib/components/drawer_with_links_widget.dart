@@ -60,7 +60,15 @@ class _DrawerWithLinksWidgetState extends State<DrawerWithLinksWidget> {
             Expanded(
               child: InkWell(
                 onTap: () async {
-                  context.pushNamed('LandingPage');
+                  context.pushNamed(
+                    'LandingPage',
+                    extra: <String, dynamic>{
+                      kTransitionInfoKey: TransitionInfo(
+                        hasTransition: true,
+                        transitionType: PageTransitionType.fade,
+                      ),
+                    },
+                  );
                 },
                 child: Text(
                   'Landing Page',
