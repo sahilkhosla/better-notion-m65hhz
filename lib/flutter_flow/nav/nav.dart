@@ -72,23 +72,22 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, _) =>
-          appStateNotifier.loggedIn ? NavBarPage() : LoginWidget(),
+          appStateNotifier.loggedIn ? InitConnectionWidget() : LoginWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) =>
-              appStateNotifier.loggedIn ? NavBarPage() : LoginWidget(),
+          builder: (context, _) => appStateNotifier.loggedIn
+              ? InitConnectionWidget()
+              : LoginWidget(),
           routes: [
             FFRoute(
               name: 'LandingPage',
               path: 'landingPage/:code',
               requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'LandingPage')
-                  : LandingPageWidget(
-                      code: params.getParam('code', ParamType.String),
-                    ),
+              builder: (context, params) => LandingPageWidget(
+                code: params.getParam('code', ParamType.String),
+              ),
             ),
             FFRoute(
               name: 'Login',
@@ -99,9 +98,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'InitConnection',
               path: 'initConnection',
               requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'InitConnection')
-                  : InitConnectionWidget(),
+              builder: (context, params) => InitConnectionWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),

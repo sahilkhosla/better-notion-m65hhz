@@ -70,22 +70,6 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  if (widget.code != null && widget.code != '')
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
-                        child: Text(
-                          widget.code!,
-                          textAlign: TextAlign.center,
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
               InkWell(
                 onTap: () async {
                   _currentPageLink = await generateCurrentPageLink(context);
@@ -190,6 +174,10 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
+              ),
+              Text(
+                widget.code!,
+                style: FlutterFlowTheme.of(context).bodyText1,
               ),
             ],
           ),
