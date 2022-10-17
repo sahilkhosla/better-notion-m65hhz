@@ -62,6 +62,12 @@ class _DrawerWithLinksWidgetState extends State<DrawerWithLinksWidget> {
                 onTap: () async {
                   context.pushNamed(
                     'LandingPage',
+                    params: {
+                      'code': serializeParam(
+                        'drawer',
+                        ParamType.String,
+                      ),
+                    }.withoutNulls,
                     extra: <String, dynamic>{
                       kTransitionInfoKey: TransitionInfo(
                         hasTransition: true,
