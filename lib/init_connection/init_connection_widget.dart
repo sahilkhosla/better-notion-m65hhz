@@ -118,6 +118,10 @@ class _InitConnectionWidgetState extends State<InitConnectionWidget> {
                         ),
                       ],
                     ),
+                    Text(
+                      FFAppState().accessToken,
+                      style: FlutterFlowTheme.of(context).bodyText1,
+                    ),
                   ],
                 ),
               ),

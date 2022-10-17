@@ -14,11 +14,19 @@ class FFAppState {
 
   Future initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
+    _accessToken = prefs.getString('ff_accessToken') ?? _accessToken;
   }
 
   late SharedPreferences prefs;
 
   bool fetchingDBNames = false;
+
+  String _accessToken = '';
+  String get accessToken => _accessToken;
+  set accessToken(String _value) {
+    _accessToken = _value;
+    prefs.setString('ff_accessToken', _value);
+  }
 }
 
 LatLng? _latLngFromString(String? val) {

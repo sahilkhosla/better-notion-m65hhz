@@ -1,11 +1,8 @@
-import '../auth/auth_util.dart';
 import '../backend/api_requests/api_calls.dart';
-import '../backend/backend.dart';
 import '../components/loading_animation_f_s_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,7 +21,6 @@ class DBListWidget extends StatefulWidget {
 
 class _DBListWidgetState extends State<DBListWidget> {
   ApiCallResponse? apiResult;
-  NotionCredentialsRecord? notionCredentialOutput;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -33,7 +29,7 @@ class _DBListWidgetState extends State<DBListWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       setState(() => FFAppState().fetchingDBNames = true);
-      await Future.delayed(const Duration(milliseconds: 1000));
+      await Future.delayed(const Duration(milliseconds: 2000));
       apiResult = await NotionTokenCall.call(
         code: widget.code,
       );
@@ -60,21 +56,9 @@ class _DBListWidgetState extends State<DBListWidget> {
             );
           },
         );
-
-        final notionCredentialsCreateData = createNotionCredentialsRecordData(
-          botId: NotionTokenCall.botId(
-            (apiResult?.jsonBody ?? ''),
-          ).toString(),
-          accessToken: NotionTokenCall.accessToken(
-            (apiResult?.jsonBody ?? ''),
-          ).toString(),
-        );
-        var notionCredentialsRecordReference =
-            NotionCredentialsRecord.collection.doc();
-        await notionCredentialsRecordReference.set(notionCredentialsCreateData);
-        notionCredentialOutput = NotionCredentialsRecord.getDocumentFromData(
-            notionCredentialsCreateData, notionCredentialsRecordReference);
-        setState(() => FFAppState().fetchingDBNames = false);
+        setState(() => FFAppState().accessToken = NotionTokenCall.accessToken(
+              (apiResult?.jsonBody ?? ''),
+            ).toString());
       } else {
         await showDialog(
           context: context,
