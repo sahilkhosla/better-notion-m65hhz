@@ -73,7 +73,7 @@ class _DBListWidgetState extends State<DBListWidget> {
         await notionCredentialsRecordReference.set(notionCredentialsCreateData);
         notionCredentialOutput = NotionCredentialsRecord.getDocumentFromData(
             notionCredentialsCreateData, notionCredentialsRecordReference);
-        setState(() => FFAppState().fetchingDBNames = false);
+        setState(() => FFAppState().fetchingDBNames = true);
       } else {
         await showDialog(
           context: context,
