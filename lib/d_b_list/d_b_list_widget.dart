@@ -73,7 +73,7 @@ class _DBListWidgetState extends State<DBListWidget> {
         await notionCredentialsRecordReference.set(notionCredentialsCreateData);
         notionCredentialOutput = NotionCredentialsRecord.getDocumentFromData(
             notionCredentialsCreateData, notionCredentialsRecordReference);
-        setState(() => FFAppState().fetchingDBNames = true);
+        setState(() => FFAppState().fetchingDBNames = false);
       } else {
         await showDialog(
           context: context,
@@ -135,7 +135,7 @@ class _DBListWidgetState extends State<DBListWidget> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Visibility(
-            visible: !FFAppState().fetchingDBNames,
+            visible: FFAppState().fetchingDBNames,
             child: LoadingAnimationFSWidget(),
           ),
         ),
