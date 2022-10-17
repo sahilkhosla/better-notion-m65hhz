@@ -5,7 +5,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -23,54 +22,8 @@ class LandingPageWidget extends StatefulWidget {
 
 class _LandingPageWidgetState extends State<LandingPageWidget> {
   ApiCallResponse? apiResult;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   String _currentPageLink = '';
-
-  @override
-  void initState() {
-    super.initState();
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      apiResult = await NotionTokenCall.call(
-        code: widget.code,
-      );
-      if ((apiResult?.statusCode ?? 200) == 200 ? true : true) {
-        await showDialog(
-          context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              title: Text('YES'),
-              content: Text(NotionTokenCall.accessToken(
-                (apiResult?.jsonBody ?? ''),
-              ).toString()),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
-                ),
-              ],
-            );
-          },
-        );
-      } else {
-        await showDialog(
-          context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              title: Text('NOOO'),
-              content: Text((apiResult?.statusCode ?? 200).toString()),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
-                ),
-              ],
-            );
-          },
-        );
-      }
-    });
-  }
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -164,6 +117,73 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                     ),
                     borderRadius: BorderRadius.circular(8),
                   ),
+                ),
+              ),
+              FFButtonWidget(
+                onPressed: () async {
+                  apiResult = await NotionTokenCall.call(
+                    code: widget.code,
+                  );
+                  if (NotionTokenCall.accessToken(
+                            (apiResult?.jsonBody ?? ''),
+                          ) !=
+                          null
+                      ? true
+                      : true) {
+                    await showDialog(
+                      context: context,
+                      builder: (alertDialogContext) {
+                        return AlertDialog(
+                          title: Text('YES'),
+                          content: Text(NotionTokenCall.accessToken(
+                            (apiResult?.jsonBody ?? ''),
+                          ).toString()),
+                          actions: [
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(alertDialogContext),
+                              child: Text('Ok'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    await showDialog(
+                      context: context,
+                      builder: (alertDialogContext) {
+                        return AlertDialog(
+                          title: Text('NOOO'),
+                          content:
+                              Text((apiResult?.statusCode ?? 200).toString()),
+                          actions: [
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(alertDialogContext),
+                              child: Text('Get Out'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+
+                  setState(() {});
+                },
+                text: 'Next',
+                options: FFButtonOptions(
+                  width: 130,
+                  height: 40,
+                  color: FlutterFlowTheme.of(context).primaryColor,
+                  textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                        fontFamily: 'Poppins',
+                        color: Colors.white,
+                      ),
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
             ],
