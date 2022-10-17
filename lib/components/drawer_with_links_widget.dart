@@ -47,7 +47,7 @@ class _DrawerWithLinksWidgetState extends State<DrawerWithLinksWidget> {
                   );
                 },
                 child: Text(
-                  'Init Connection',
+                  'Init Conn',
                   style: FlutterFlowTheme.of(context).title3,
                 ),
               ),
@@ -65,7 +65,7 @@ class _DrawerWithLinksWidgetState extends State<DrawerWithLinksWidget> {
                     'LandingPage',
                     params: {
                       'code': serializeParam(
-                        currentUserEmail,
+                        currentUserDisplayName,
                         ParamType.String,
                       ),
                     }.withoutNulls,
