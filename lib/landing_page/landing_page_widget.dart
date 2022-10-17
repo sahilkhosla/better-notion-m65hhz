@@ -1,5 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/api_requests/api_calls.dart';
+import '../components/drawer_with_links_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -30,6 +31,10 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      drawer: Drawer(
+        elevation: 16,
+        child: DrawerWithLinksWidget(),
+      ),
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
@@ -39,16 +44,16 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
           borderWidth: 1,
           buttonSize: 60,
           icon: Icon(
-            Icons.arrow_back_rounded,
+            Icons.menu,
             color: Colors.white,
             size: 30,
           ),
-          onPressed: () {
-            print('IconButton pressed ...');
+          onPressed: () async {
+            scaffoldKey.currentState!.openDrawer();
           },
         ),
         title: Text(
-          'Page Title',
+          'Landing Page',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Poppins',
                 color: Colors.white,

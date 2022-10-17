@@ -1,3 +1,5 @@
+import '../components/drawer_with_links_widget.dart';
+import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +23,27 @@ class _InitConnectionWidgetState extends State<InitConnectionWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      drawer: Drawer(
+        elevation: 16,
+        child: DrawerWithLinksWidget(),
+      ),
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
+        leading: FlutterFlowIconButton(
+          borderColor: Colors.transparent,
+          borderRadius: 30,
+          borderWidth: 1,
+          buttonSize: 60,
+          icon: Icon(
+            Icons.menu,
+            color: Colors.white,
+            size: 30,
+          ),
+          onPressed: () async {
+            scaffoldKey.currentState!.openDrawer();
+          },
+        ),
         title: Text(
           'Init Connection',
           style: FlutterFlowTheme.of(context).title2.override(
