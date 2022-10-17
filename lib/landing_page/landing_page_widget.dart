@@ -1,5 +1,4 @@
 import '../auth/auth_util.dart';
-import '../backend/api_requests/api_calls.dart';
 import '../components/drawer_with_links_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -22,7 +21,6 @@ class LandingPageWidget extends StatefulWidget {
 }
 
 class _LandingPageWidgetState extends State<LandingPageWidget> {
-  ApiCallResponse? apiResult;
   String _currentPageLink = '';
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -110,54 +108,15 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
               ),
               FFButtonWidget(
                 onPressed: () async {
-                  apiResult = await NotionTokenCall.call(
-                    code: widget.code,
+                  context.pushNamed(
+                    'DBList',
+                    queryParams: {
+                      'code': serializeParam(
+                        widget.code,
+                        ParamType.String,
+                      ),
+                    }.withoutNulls,
                   );
-                  if (NotionTokenCall.accessToken(
-                            (apiResult?.jsonBody ?? ''),
-                          ) !=
-                          null
-                      ? true
-                      : true) {
-                    await showDialog(
-                      context: context,
-                      builder: (alertDialogContext) {
-                        return AlertDialog(
-                          title: Text('YES'),
-                          content: Text(NotionTokenCall.accessToken(
-                            (apiResult?.jsonBody ?? ''),
-                          ).toString()),
-                          actions: [
-                            TextButton(
-                              onPressed: () =>
-                                  Navigator.pop(alertDialogContext),
-                              child: Text('Ok'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  } else {
-                    await showDialog(
-                      context: context,
-                      builder: (alertDialogContext) {
-                        return AlertDialog(
-                          title: Text('NOOO'),
-                          content:
-                              Text((apiResult?.statusCode ?? 200).toString()),
-                          actions: [
-                            TextButton(
-                              onPressed: () =>
-                                  Navigator.pop(alertDialogContext),
-                              child: Text('Get Out'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }
-
-                  setState(() {});
                 },
                 text: 'Next',
                 options: FFButtonOptions(

@@ -99,6 +99,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'initConnection',
               requireAuth: true,
               builder: (context, params) => InitConnectionWidget(),
+            ),
+            FFRoute(
+              name: 'DBList',
+              path: 'dBList',
+              requireAuth: true,
+              builder: (context, params) => DBListWidget(
+                code: params.getParam('code', ParamType.String),
+              ),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),
