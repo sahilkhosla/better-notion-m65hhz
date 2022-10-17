@@ -70,7 +70,10 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
             children: [
               InkWell(
                 onTap: () async {
-                  _currentPageLink = await generateCurrentPageLink(context);
+                  _currentPageLink = await generateCurrentPageLink(
+                    context,
+                    isShortLink: false,
+                  );
 
                   await Share.share(_currentPageLink);
                 },
