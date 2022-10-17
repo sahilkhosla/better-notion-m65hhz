@@ -65,7 +65,7 @@ class _DrawerWithLinksWidgetState extends State<DrawerWithLinksWidget> {
                     'LandingPage',
                     params: {
                       'code': serializeParam(
-                        currentUserDisplayName,
+                        currentUserEmail,
                         ParamType.String,
                       ),
                     }.withoutNulls,
