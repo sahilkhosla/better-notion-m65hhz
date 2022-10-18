@@ -110,6 +110,14 @@ class _$NotionCredentialsRecordSerializer
             specifiedType: const FullType(
                 BuiltList, const [const FullType(DataDbListStruct)])));
     }
+    value = object.dbListName;
+    if (value != null) {
+      result
+        ..add('dbListName')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -183,6 +191,12 @@ class _$NotionCredentialsRecordSerializer
                       BuiltList, const [const FullType(DataDbListStruct)]))!
               as BuiltList<Object?>);
           break;
+        case 'dbListName':
+          result.dbListName.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -222,6 +236,8 @@ class _$NotionCredentialsRecord extends NotionCredentialsRecord {
   @override
   final BuiltList<DataDbListStruct>? dbList;
   @override
+  final BuiltList<String>? dbListName;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$NotionCredentialsRecord(
@@ -241,6 +257,7 @@ class _$NotionCredentialsRecord extends NotionCredentialsRecord {
       this.ownerUserEmail,
       this.accessToken,
       this.dbList,
+      this.dbListName,
       this.ffRef})
       : super._();
 
@@ -269,6 +286,7 @@ class _$NotionCredentialsRecord extends NotionCredentialsRecord {
         ownerUserEmail == other.ownerUserEmail &&
         accessToken == other.accessToken &&
         dbList == other.dbList &&
+        dbListName == other.dbListName &&
         ffRef == other.ffRef;
   }
 
@@ -285,18 +303,20 @@ class _$NotionCredentialsRecord extends NotionCredentialsRecord {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc($jc(0, botId.hashCode),
-                                                    workspaceName.hashCode),
-                                                workspaceIcon.hashCode),
-                                            workspaceId.hashCode),
-                                        ownerType.hashCode),
-                                    ownerUserId.hashCode),
-                                ownerUserName.hashCode),
-                            ownerUserAvatarUrl.hashCode),
-                        owerUserType.hashCode),
-                    ownerUserEmail.hashCode),
-                accessToken.hashCode),
-            dbList.hashCode),
+                                                $jc(
+                                                    $jc($jc(0, botId.hashCode),
+                                                        workspaceName.hashCode),
+                                                    workspaceIcon.hashCode),
+                                                workspaceId.hashCode),
+                                            ownerType.hashCode),
+                                        ownerUserId.hashCode),
+                                    ownerUserName.hashCode),
+                                ownerUserAvatarUrl.hashCode),
+                            owerUserType.hashCode),
+                        ownerUserEmail.hashCode),
+                    accessToken.hashCode),
+                dbList.hashCode),
+            dbListName.hashCode),
         ffRef.hashCode));
   }
 
@@ -315,6 +335,7 @@ class _$NotionCredentialsRecord extends NotionCredentialsRecord {
           ..add('ownerUserEmail', ownerUserEmail)
           ..add('accessToken', accessToken)
           ..add('dbList', dbList)
+          ..add('dbListName', dbListName)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -379,6 +400,12 @@ class NotionCredentialsRecordBuilder
       _$this._dbList ??= new ListBuilder<DataDbListStruct>();
   set dbList(ListBuilder<DataDbListStruct>? dbList) => _$this._dbList = dbList;
 
+  ListBuilder<String>? _dbListName;
+  ListBuilder<String> get dbListName =>
+      _$this._dbListName ??= new ListBuilder<String>();
+  set dbListName(ListBuilder<String>? dbListName) =>
+      _$this._dbListName = dbListName;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -402,6 +429,7 @@ class NotionCredentialsRecordBuilder
       _ownerUserEmail = $v.ownerUserEmail;
       _accessToken = $v.accessToken;
       _dbList = $v.dbList?.toBuilder();
+      _dbListName = $v.dbListName?.toBuilder();
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -439,12 +467,15 @@ class NotionCredentialsRecordBuilder
               ownerUserEmail: ownerUserEmail,
               accessToken: accessToken,
               dbList: _dbList?.build(),
+              dbListName: _dbListName?.build(),
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'dbList';
         _dbList?.build();
+        _$failedField = 'dbListName';
+        _dbListName?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'NotionCredentialsRecord', _$failedField, e.toString());
