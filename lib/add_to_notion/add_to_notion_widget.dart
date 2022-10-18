@@ -76,140 +76,127 @@ class _AddToNotionWidgetState extends State<AddToNotionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      drawer: Drawer(
-        elevation: 16,
-        child: DrawerWithLinksWidget(),
+    return StreamBuilder<List<NotionCredentialsRecord>>(
+      stream: queryNotionCredentialsRecord(
+        queryBuilder: (notionCredentialsRecord) => notionCredentialsRecord
+            .where('ownerUserEmail', isEqualTo: currentUserEmail),
+        singleRecord: true,
       ),
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30,
-          borderWidth: 1,
-          buttonSize: 60,
-          icon: Icon(
-            Icons.menu,
-            color: Colors.white,
-            size: 30,
+      builder: (context, snapshot) {
+        // Customize what your widget looks like when it's loading.
+        if (!snapshot.hasData) {
+          return Center(
+            child: SizedBox(
+              width: 50,
+              height: 50,
+              child: CircularProgressIndicator(
+                color: FlutterFlowTheme.of(context).primaryColor,
+              ),
+            ),
+          );
+        }
+        List<NotionCredentialsRecord> addToNotionNotionCredentialsRecordList =
+            snapshot.data!;
+        // Return an empty Container when the document does not exist.
+        if (snapshot.data!.isEmpty) {
+          return Container();
+        }
+        final addToNotionNotionCredentialsRecord =
+            addToNotionNotionCredentialsRecordList.isNotEmpty
+                ? addToNotionNotionCredentialsRecordList.first
+                : null;
+        return Scaffold(
+          key: scaffoldKey,
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          drawer: Drawer(
+            elevation: 16,
+            child: DrawerWithLinksWidget(),
           ),
-          onPressed: () async {
-            scaffoldKey.currentState!.openDrawer();
-          },
-        ),
-        title: Text(
-          'Add To Notion',
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Poppins',
+          appBar: AppBar(
+            backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+            automaticallyImplyLeading: false,
+            leading: FlutterFlowIconButton(
+              borderColor: Colors.transparent,
+              borderRadius: 30,
+              borderWidth: 1,
+              buttonSize: 60,
+              icon: Icon(
+                Icons.menu,
                 color: Colors.white,
-                fontSize: 22,
+                size: 30,
               ),
-        ),
-        actions: [],
-        centerTitle: false,
-        elevation: 2,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Num Items: ${FFAppState().dbNames.length.toString()}',
-                      style: FlutterFlowTheme.of(context).bodyText1,
-                    ),
+              onPressed: () async {
+                scaffoldKey.currentState!.openDrawer();
+              },
+            ),
+            title: Text(
+              'Add To Notion',
+              style: FlutterFlowTheme.of(context).title2.override(
+                    fontFamily: 'Poppins',
+                    color: Colors.white,
+                    fontSize: 22,
                   ),
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text(
-                    'Access Token: ${FFAppState().accessToken}',
-                    style: FlutterFlowTheme.of(context).bodyText1,
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
-                      child: StreamBuilder<List<NotionCredentialsRecord>>(
-                        stream: queryNotionCredentialsRecord(
-                          queryBuilder: (notionCredentialsRecord) =>
-                              notionCredentialsRecord.where('ownerUserEmail',
-                                  isEqualTo: currentUserEmail),
-                          singleRecord: true,
-                        ),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: CircularProgressIndicator(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                ),
-                              ),
-                            );
-                          }
-                          List<NotionCredentialsRecord>
-                              dropDownNotionCredentialsRecordList =
-                              snapshot.data!;
-                          // Return an empty Container when the document does not exist.
-                          if (snapshot.data!.isEmpty) {
-                            return Container();
-                          }
-                          final dropDownNotionCredentialsRecord =
-                              dropDownNotionCredentialsRecordList.isNotEmpty
-                                  ? dropDownNotionCredentialsRecordList.first
-                                  : null;
-                          return FlutterFlowDropDown(
-                            options: dropDownNotionCredentialsRecord!
-                                .dbListName!
-                                .toList()
-                                .toList(),
-                            onChanged: (val) =>
-                                setState(() => dropDownValue = val),
-                            width: 180,
-                            height: 50,
-                            textStyle:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: Colors.black,
-                                    ),
-                            hintText: 'Please select...',
-                            fillColor: Colors.white,
-                            elevation: 2,
-                            borderColor: Colors.transparent,
-                            borderWidth: 0,
-                            borderRadius: 0,
-                            margin:
-                                EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                            hidesUnderline: true,
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+            ),
+            actions: [],
+            centerTitle: false,
+            elevation: 2,
           ),
-        ),
-      ),
+          body: SafeArea(
+            child: GestureDetector(
+              onTap: () => FocusScope.of(context).unfocus(),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Num Items: ${FFAppState().dbNames.length.toString()}',
+                          style: FlutterFlowTheme.of(context).bodyText1,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text(
+                        'Access Token: ${FFAppState().accessToken}',
+                        style: FlutterFlowTheme.of(context).bodyText1,
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                    child: FlutterFlowDropDown(
+                      options: addToNotionNotionCredentialsRecord!.dbListName!
+                          .toList()
+                          .toList(),
+                      onChanged: (val) => setState(() => dropDownValue = val),
+                      width: 180,
+                      height: 50,
+                      textStyle:
+                          FlutterFlowTheme.of(context).bodyText1.override(
+                                fontFamily: 'Poppins',
+                                color: Colors.black,
+                              ),
+                      hintText: 'Please select...',
+                      fillColor: Colors.white,
+                      elevation: 2,
+                      borderColor: Colors.transparent,
+                      borderWidth: 0,
+                      borderRadius: 0,
+                      margin: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                      hidesUnderline: true,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
