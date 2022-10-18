@@ -1,5 +1,4 @@
 import '../auth/auth_util.dart';
-import '../backend/api_requests/api_calls.dart';
 import '../backend/backend.dart';
 import '../components/drawer_with_links_widget.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
@@ -7,7 +6,7 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AddToNotionWidget extends StatefulWidget {
@@ -18,61 +17,8 @@ class AddToNotionWidget extends StatefulWidget {
 }
 
 class _AddToNotionWidgetState extends State<AddToNotionWidget> {
-  ApiCallResponse? apiResult0um;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   String? dropDownValue;
-
-  @override
-  void initState() {
-    super.initState();
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      apiResult0um = await ListDatabasesCall.call(
-        accessTokenFromLocalStorage: FFAppState().accessToken,
-      );
-      if ((apiResult0um?.succeeded ?? true)) {
-        await showDialog(
-          context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              title: Text('True'),
-              content: Text(ListDatabasesCall.dbNames(
-                (apiResult0um?.jsonBody ?? ''),
-              ).toString().length.toString()),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
-                ),
-              ],
-            );
-          },
-        );
-        setState(() => FFAppState().dbNames = (ListDatabasesCall.dbNames(
-              (apiResult0um?.jsonBody ?? ''),
-            ) as List)
-                .map<String>((s) => s.toString())
-                .toList()
-                .toList());
-      } else {
-        await showDialog(
-          context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              title: Text('Fail'),
-              content: Text('Fail....'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
-                ),
-              ],
-            );
-          },
-        );
-      }
-    });
-  }
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -87,10 +33,11 @@ class _AddToNotionWidgetState extends State<AddToNotionWidget> {
         if (!snapshot.hasData) {
           return Center(
             child: SizedBox(
-              width: 50,
-              height: 50,
-              child: CircularProgressIndicator(
+              width: 40,
+              height: 40,
+              child: SpinKitFadingCube(
                 color: FlutterFlowTheme.of(context).primaryColor,
+                size: 40,
               ),
             ),
           );
