@@ -85,6 +85,21 @@ class _DrawerWithLinksWidgetState extends State<DrawerWithLinksWidget> {
             ),
           ],
         ),
+        Divider(),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            InkWell(
+              onTap: () async {
+                context.pushNamed('AddToNotion');
+              },
+              child: Text(
+                'Add To Notion',
+                style: FlutterFlowTheme.of(context).title3,
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }

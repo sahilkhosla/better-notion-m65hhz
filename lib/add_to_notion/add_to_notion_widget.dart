@@ -97,7 +97,7 @@ class _AddToNotionWidgetState extends State<AddToNotionWidget> {
           },
         ),
         title: Text(
-          'Page Title',
+          'Add To Notion',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Poppins',
                 color: Colors.white,
@@ -124,6 +124,10 @@ class _AddToNotionWidgetState extends State<AddToNotionWidget> {
                     ),
                   ),
                 ],
+              ),
+              Text(
+                FFAppState().accessToken,
+                style: FlutterFlowTheme.of(context).bodyText1,
               ),
             ],
           ),
