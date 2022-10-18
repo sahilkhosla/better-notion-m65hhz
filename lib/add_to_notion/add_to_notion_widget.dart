@@ -5,6 +5,7 @@ import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -105,10 +106,26 @@ class _AddToNotionWidgetState extends State<AddToNotionWidget> {
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                     child: FlutterFlowDropDown(
-                      options: addToNotionNotionCredentialsRecord!.dbListName!
-                          .toList()
-                          .toList(),
-                      onChanged: (val) => setState(() => dropDownValue = val),
+                      options: FFAppState().dbNames.toList(),
+                      onChanged: (val) async {
+                        setState(() => dropDownValue = val);
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              content: Text(functions.getDBId(dropDownValue!,
+                                  FFAppState().dbMetaData.toList())!),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
                       width: 180,
                       height: 50,
                       textStyle:

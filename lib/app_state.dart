@@ -1,6 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:csv/csv.dart';
 import 'flutter_flow/lat_lng.dart';
+import 'dart:convert';
 
 class FFAppState {
   static final FFAppState _instance = FFAppState._internal();
@@ -21,7 +22,7 @@ class FFAppState {
 
   late FlutterSecureStorage secureStorage;
 
-  String _accessToken = 'Loading...';
+  String _accessToken = 'secret_btGP8ChzQewjpc8gAjpaFyLKIYOkrvKcagzE3tSif4E';
   String get accessToken => _accessToken;
   set accessToken(String _value) {
     _accessToken = _value;
@@ -32,9 +33,14 @@ class FFAppState {
     secureStorage.delete(key: 'ff_accessToken');
   }
 
-  String statusMessage = '';
+  String statusMessage = 'Loading...';
 
-  List<String> dbNames = [];
+  List<String> dbNames = ['DB 01', 'DB 02'];
+
+  List<dynamic> dbMetaData = [
+    jsonDecode('{\"name\":\"DB 01\",\"id\":\"001ls\"}'),
+    jsonDecode('{\"name\":\"DB 02\",\"id\":\"002ls\"}')
+  ];
 }
 
 LatLng? _latLngFromString(String? val) {
