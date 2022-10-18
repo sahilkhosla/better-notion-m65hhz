@@ -81,6 +81,40 @@ class NotionTokenCall {
       );
 }
 
+class ListDatabasesCall {
+  static Future<ApiCallResponse> call({
+    String? accessTokenFromLocalStorage = '',
+  }) {
+    final body = '''
+{
+  "filter": {
+    "property": "object",
+    "value": "database"
+  }
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'List Databases',
+      apiUrl: 'https://api.notion.com/v1/search',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${accessTokenFromLocalStorage}',
+        'Content-Type': 'application/json',
+        'Notion-Version': '2022-06-28',
+      },
+      params: {},
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+    );
+  }
+
+  static dynamic dbSearchResults(dynamic response) => getJsonField(
+        response,
+        r'''$.results''',
+        true,
+      );
+}
+
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;

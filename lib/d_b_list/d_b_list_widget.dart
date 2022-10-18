@@ -29,6 +29,7 @@ class _DBListWidgetState extends State<DBListWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       // fetchingDBMessage
       setState(() => FFAppState().statusMessage = 'Fetching Databases...');
+      await Future.delayed(const Duration(milliseconds: 1000));
       apiResult = await NotionTokenCall.call(
         code: widget.code,
       );
@@ -44,6 +45,7 @@ class _DBListWidgetState extends State<DBListWidget> {
         setState(() => FFAppState().accessToken = NotionTokenCall.accessToken(
               (apiResult?.jsonBody ?? ''),
             ).toString());
+        await Future.delayed(const Duration(milliseconds: 1000));
 
         context.goNamed(
           'AddToNotion',
