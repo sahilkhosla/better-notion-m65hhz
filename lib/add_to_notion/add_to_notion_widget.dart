@@ -44,9 +44,12 @@ class _AddToNotionWidgetState extends State<AddToNotionWidget> {
             );
           },
         );
-        setState(() => FFAppState().dbList = ListDatabasesCall.dbSearchResults(
+        setState(() => FFAppState().dbNames = (ListDatabasesCall.dbNames(
               (apiResult0um?.jsonBody ?? ''),
-            ).toList());
+            ) as List)
+                .map<String>((s) => s.toString())
+                .toList()
+                .toList());
       } else {
         await showDialog(
           context: context,
@@ -100,7 +103,7 @@ class _AddToNotionWidgetState extends State<AddToNotionWidget> {
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(12, 24, 12, 24),
                       child: FlutterFlowDropDown(
-                        options: ['Option 1'],
+                        options: FFAppState().dbNames.toList(),
                         onChanged: (val) => setState(() => dropDownValue = val),
                         width: 180,
                         height: 50,

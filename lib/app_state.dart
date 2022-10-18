@@ -1,7 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:csv/csv.dart';
 import 'flutter_flow/lat_lng.dart';
-import 'dart:convert';
 
 class FFAppState {
   static final FFAppState _instance = FFAppState._internal();
@@ -35,7 +34,7 @@ class FFAppState {
 
   String statusMessage = '';
 
-  List<dynamic> dbList = [];
+  List<String> dbNames = [];
 }
 
 LatLng? _latLngFromString(String? val) {

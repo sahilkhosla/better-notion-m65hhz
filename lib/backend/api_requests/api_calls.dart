@@ -113,6 +113,11 @@ class ListDatabasesCall {
         r'''$.results''',
         true,
       );
+  static dynamic dbNames(dynamic response) => getJsonField(
+        response,
+        r'''$.results[:].title[:].text.content''',
+        true,
+      );
 }
 
 class ApiPagingParams {
