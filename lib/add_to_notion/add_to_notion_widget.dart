@@ -96,23 +96,11 @@ class _AddToNotionWidgetState extends State<AddToNotionWidget> {
                 children: [
                   Row(
                     mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Num Items: ${FFAppState().dbNames.length.toString()}',
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                      ),
-                    ],
+                    children: [],
                   ),
                   Row(
                     mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text(
-                        'Access Token: ${FFAppState().accessToken}',
-                        style: FlutterFlowTheme.of(context).bodyText1,
-                      ),
-                    ],
+                    children: [],
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
