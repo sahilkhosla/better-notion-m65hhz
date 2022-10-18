@@ -1,5 +1,6 @@
 import '../backend/api_requests/api_calls.dart';
-import '../flutter_flow/flutter_flow_drop_down.dart';
+import '../components/drawer_with_links_widget.dart';
+import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,6 @@ class AddToNotionWidget extends StatefulWidget {
 class _AddToNotionWidgetState extends State<AddToNotionWidget> {
   ApiCallResponse? apiResult0um;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  String? dropDownValue;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _AddToNotionWidgetState extends State<AddToNotionWidget> {
           builder: (alertDialogContext) {
             return AlertDialog(
               title: Text('True'),
-              content: Text(ListDatabasesCall.dbSearchResults(
+              content: Text(ListDatabasesCall.dbNames(
                 (apiResult0um?.jsonBody ?? ''),
               ).toString().length.toString()),
               actions: [
@@ -75,11 +75,29 @@ class _AddToNotionWidgetState extends State<AddToNotionWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      drawer: Drawer(
+        elevation: 16,
+        child: DrawerWithLinksWidget(),
+      ),
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
+        leading: FlutterFlowIconButton(
+          borderColor: Colors.transparent,
+          borderRadius: 30,
+          borderWidth: 1,
+          buttonSize: 60,
+          icon: Icon(
+            Icons.menu,
+            color: Colors.white,
+            size: 30,
+          ),
+          onPressed: () async {
+            scaffoldKey.currentState!.openDrawer();
+          },
+        ),
         title: Text(
-          'Add To Notion',
+          'Page Title',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Poppins',
                 color: Colors.white,
@@ -100,27 +118,9 @@ class _AddToNotionWidgetState extends State<AddToNotionWidget> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Expanded(
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(12, 24, 12, 24),
-                      child: FlutterFlowDropDown(
-                        options: FFAppState().dbNames.toList(),
-                        onChanged: (val) => setState(() => dropDownValue = val),
-                        width: 180,
-                        height: 50,
-                        textStyle:
-                            FlutterFlowTheme.of(context).bodyText1.override(
-                                  fontFamily: 'Poppins',
-                                  color: Colors.black,
-                                ),
-                        hintText: 'Please select...',
-                        fillColor: Colors.white,
-                        elevation: 2,
-                        borderColor: Colors.transparent,
-                        borderWidth: 0,
-                        borderRadius: 0,
-                        margin: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                        hidesUnderline: true,
-                      ),
+                    child: Text(
+                      FFAppState().dbNames.length.toString(),
+                      style: FlutterFlowTheme.of(context).bodyText1,
                     ),
                   ),
                 ],
