@@ -1,6 +1,5 @@
 import '../backend/api_requests/api_calls.dart';
 import '../components/loading_animation_f_s_widget.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +27,8 @@ class _DBListWidgetState extends State<DBListWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() => FFAppState().fetchingDBNames = true);
-      await Future.delayed(const Duration(milliseconds: 2000));
+      // fetchingDBMessage
+      setState(() => FFAppState().statusMessage = 'Fetching Databases...');
       apiResult = await NotionTokenCall.call(
         code: widget.code,
       );
@@ -39,58 +38,20 @@ class _DBListWidgetState extends State<DBListWidget> {
               null
           ? true
           : true) {
-        await showDialog(
-          context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              title: Text('YES'),
-              content: Text(NotionTokenCall.accessToken(
-                (apiResult?.jsonBody ?? ''),
-              ).toString()),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
-                ),
-              ],
-            );
-          },
-        );
+        // finalizingMessage
+        setState(() => FFAppState().statusMessage = 'Finalizing...');
+        // setAccessToken
         setState(() => FFAppState().accessToken = NotionTokenCall.accessToken(
               (apiResult?.jsonBody ?? ''),
             ).toString());
-        await showDialog(
-          context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              title: Text(FFAppState().accessToken),
-              content: Text('Test'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
-                ),
-              ],
-            );
-          },
-        );
-      } else {
-        await showDialog(
-          context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              title: Text('NOOO'),
-              content: Text(getJsonField(
-                (apiResult?.jsonBody ?? ''),
-                r'''$.error''',
-              ).toString()),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Get Out'),
-                ),
-              ],
-            );
+
+        context.goNamed(
+          'AddToNotion',
+          extra: <String, dynamic>{
+            kTransitionInfoKey: TransitionInfo(
+              hasTransition: true,
+              transitionType: PageTransitionType.fade,
+            ),
           },
         );
       }
@@ -102,42 +63,10 @@ class _DBListWidgetState extends State<DBListWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30,
-          borderWidth: 1,
-          buttonSize: 60,
-          icon: Icon(
-            Icons.menu,
-            color: Colors.white,
-            size: 30,
-          ),
-          onPressed: () {
-            print('IconButton pressed ...');
-          },
-        ),
-        title: Text(
-          'Add',
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Poppins',
-                color: Colors.white,
-                fontSize: 22,
-              ),
-        ),
-        actions: [],
-        centerTitle: false,
-        elevation: 2,
-      ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: Visibility(
-            visible: FFAppState().fetchingDBNames,
-            child: LoadingAnimationFSWidget(),
-          ),
+          child: LoadingAnimationFSWidget(),
         ),
       ),
     );

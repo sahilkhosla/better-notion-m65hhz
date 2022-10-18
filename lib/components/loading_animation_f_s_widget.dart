@@ -17,8 +17,34 @@ class _LoadingAnimationFSWidgetState extends State<LoadingAnimationFSWidget> {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        Expanded(
+          flex: 2,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                flex: 1,
+                child: Container(
+                  width: 100,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                  ),
+                  child: Lottie.network(
+                    'https://assets1.lottiefiles.com/private_files/lf30_fup2uejx.json',
+                    width: 150,
+                    height: 130,
+                    fit: BoxFit.contain,
+                    animate: true,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
         Expanded(
           flex: 1,
           child: Row(
@@ -26,19 +52,20 @@ class _LoadingAnimationFSWidgetState extends State<LoadingAnimationFSWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(
+                flex: 1,
                 child: Container(
                   width: 100,
                   height: double.infinity,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
-                    shape: BoxShape.rectangle,
                   ),
-                  child: Lottie.network(
-                    'https://assets1.lottiefiles.com/private_files/lf30_fup2uejx.json',
-                    width: 150,
-                    height: 130,
-                    fit: BoxFit.fitWidth,
-                    animate: true,
+                  alignment: AlignmentDirectional(0, 0),
+                  child: Text(
+                    FFAppState().statusMessage,
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.normal,
+                        ),
                   ),
                 ),
               ),

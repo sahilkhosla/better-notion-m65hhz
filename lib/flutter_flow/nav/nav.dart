@@ -107,6 +107,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => DBListWidget(
                 code: params.getParam('code', ParamType.String),
               ),
+            ),
+            FFRoute(
+              name: 'AddToNotion',
+              path: 'addToNotion',
+              requireAuth: true,
+              builder: (context, params) => AddToNotionWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),
