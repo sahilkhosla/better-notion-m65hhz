@@ -1,5 +1,8 @@
+import '../auth/auth_util.dart';
 import '../backend/api_requests/api_calls.dart';
+import '../backend/backend.dart';
 import '../components/drawer_with_links_widget.dart';
+import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -17,6 +20,7 @@ class AddToNotionWidget extends StatefulWidget {
 class _AddToNotionWidgetState extends State<AddToNotionWidget> {
   ApiCallResponse? apiResult0um;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  String? dropDownValue;
 
   @override
   void initState() {
@@ -119,15 +123,88 @@ class _AddToNotionWidgetState extends State<AddToNotionWidget> {
                 children: [
                   Expanded(
                     child: Text(
-                      FFAppState().dbNames.length.toString(),
+                      'Num Items: ${FFAppState().dbNames.length.toString()}',
                       style: FlutterFlowTheme.of(context).bodyText1,
                     ),
                   ),
                 ],
               ),
-              Text(
-                FFAppState().accessToken,
-                style: FlutterFlowTheme.of(context).bodyText1,
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(
+                    'Access Token: ${FFAppState().accessToken}',
+                    style: FlutterFlowTheme.of(context).bodyText1,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+                      child: StreamBuilder<List<NotionCredentialsRecord>>(
+                        stream: queryNotionCredentialsRecord(
+                          queryBuilder: (notionCredentialsRecord) =>
+                              notionCredentialsRecord.where('ownerUserEmail',
+                                  isEqualTo: currentUserEmail),
+                          singleRecord: true,
+                        ),
+                        builder: (context, snapshot) {
+                          // Customize what your widget looks like when it's loading.
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: CircularProgressIndicator(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                ),
+                              ),
+                            );
+                          }
+                          List<NotionCredentialsRecord>
+                              dropDownNotionCredentialsRecordList =
+                              snapshot.data!;
+                          // Return an empty Container when the document does not exist.
+                          if (snapshot.data!.isEmpty) {
+                            return Container();
+                          }
+                          final dropDownNotionCredentialsRecord =
+                              dropDownNotionCredentialsRecordList.isNotEmpty
+                                  ? dropDownNotionCredentialsRecordList.first
+                                  : null;
+                          return FlutterFlowDropDown(
+                            options: dropDownNotionCredentialsRecord!
+                                .dbListName!
+                                .toList()
+                                .toList(),
+                            onChanged: (val) =>
+                                setState(() => dropDownValue = val),
+                            width: 180,
+                            height: 50,
+                            textStyle:
+                                FlutterFlowTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.black,
+                                    ),
+                            hintText: 'Please select...',
+                            fillColor: Colors.white,
+                            elevation: 2,
+                            borderColor: Colors.transparent,
+                            borderWidth: 0,
+                            borderRadius: 0,
+                            margin:
+                                EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                            hidesUnderline: true,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

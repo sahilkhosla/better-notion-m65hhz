@@ -33,6 +33,10 @@ abstract class NotionCredentialsRecord
 
   String? get accessToken;
 
+  BuiltList<DataDbListStruct>? get dbList;
+
+  BuiltList<String>? get dbListName;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -49,7 +53,9 @@ abstract class NotionCredentialsRecord
         ..ownerUserAvatarUrl = ''
         ..owerUserType = ''
         ..ownerUserEmail = ''
-        ..accessToken = '';
+        ..accessToken = ''
+        ..dbList = ListBuilder()
+        ..dbListName = ListBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('notion-credentials');
@@ -101,7 +107,9 @@ Map<String, dynamic> createNotionCredentialsRecordData({
         ..ownerUserAvatarUrl = ownerUserAvatarUrl
         ..owerUserType = owerUserType
         ..ownerUserEmail = ownerUserEmail
-        ..accessToken = accessToken,
+        ..accessToken = accessToken
+        ..dbList = null
+        ..dbListName = null,
     ),
   );
 
