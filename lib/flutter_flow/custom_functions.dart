@@ -25,11 +25,13 @@ List<dynamic> getDBMetaData(List<dynamic> results) {
   // loop through results and output json with content, emoji and id
   var dbMetaData = [];
   for (var i = 0; i < results.length; i++) {
-    dbMetaData.add({
-      'id': results[i]['id'],
-      'name': results[i]['title'][0]['text']['content'],
-      'emoji': results[i]['icon'] != null ? results[i]['icon']['emoji'] : '📝'
-    });
+    if (results[i]['title'].length > 0) {
+      dbMetaData.add({
+        'id': results[i]['id'],
+        'name': results[i]['title'][0]['text']['content'],
+        'emoji': results[i]['icon'] != null ? results[i]['icon']['emoji'] : '📝'
+      });
+    }
   }
 
   return dbMetaData;
