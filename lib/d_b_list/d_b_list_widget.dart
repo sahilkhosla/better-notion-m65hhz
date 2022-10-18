@@ -59,6 +59,21 @@ class _DBListWidgetState extends State<DBListWidget> {
         setState(() => FFAppState().accessToken = NotionTokenCall.accessToken(
               (apiResult?.jsonBody ?? ''),
             ).toString());
+        await showDialog(
+          context: context,
+          builder: (alertDialogContext) {
+            return AlertDialog(
+              title: Text(FFAppState().accessToken),
+              content: Text('Test'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(alertDialogContext),
+                  child: Text('Ok'),
+                ),
+              ],
+            );
+          },
+        );
       } else {
         await showDialog(
           context: context,
